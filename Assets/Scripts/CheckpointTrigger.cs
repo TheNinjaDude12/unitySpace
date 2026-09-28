@@ -7,19 +7,21 @@ public class CheckpointTrigger : MonoBehaviour
 {
     [SerializeField]
     GameObject obj;
+    public Material highlightMaterial;
+    public Material originalMaterial;
 
     [SerializeField]
     List<GameObject> allPlatforms = new();
 
     Vector3 pos;
+   
 
     void Start()
     {
+        
+       
         pos = obj.transform.position;
-        if (File.Exists(Application.persistentDataPath + "/rotationdata.json"))
-        {
-            var data = JsonUtility.FromJson<Vector3>(Application.persistentDataPath + "/rotationdata.json");
-        }
+       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,12 +34,12 @@ public class CheckpointTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        string data = JsonUtility.ToJson(obj.transform.rotation);
-        File.WriteAllText(Application.persistentDataPath + "/rotationdata.json", data);
+  
+        obj.GetComponent<MeshRenderer>().material = originalMaterial;
     }
 
     private void OnTriggerStay(Collider other)
     {
-
+        obj.GetComponent<MeshRenderer>().material = highlightMaterial;
     }
 }

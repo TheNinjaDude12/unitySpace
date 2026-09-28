@@ -6,6 +6,15 @@ TagManager:
   tags:
   - Pickup
   - ENV
+  - CinemachineTarget
+  - Death
+  - Up
+  - Down
+  - Left
+  - Right
+  - Reset
+  - Checkpoint
+  - End
   layers:
   - Default
   - TransparentFX
@@ -52,3 +61,4 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
+  m_MigratedRenderPipelines: []

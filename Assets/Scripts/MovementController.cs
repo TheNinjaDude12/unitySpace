@@ -1,44 +1,38 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
-
-    [SerializeField]
-    PlayerStats stats;
-
-    Vector2 moveInput;
-
-    [SerializeField]
-    float moveSpeed = 5f;
-
-    //[SerializeField]
-    CharacterController controller;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] 
+    private GameObject myObject;
+    private Rigidbody rb;
+    public InputActionReference moveAction;
+    void OnEnable()
+    {
+        moveAction.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        moveAction.action.Disable();
+    }
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-
-        //Debug.Log(stats.Health);
+        rb = GetComponent<Rigidbody>();
     }
+    public float speed = 4f;
+    public float jumpStrength = 1f;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        controller.Move(moveSpeed * Time.deltaTime * new Vector3(moveInput.x, 0, moveInput.y));
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        Vector3 m_Input = new Vector3(input.x, 0, input.y);
+        rb.MovePosition(transform.position + m_Input * Time.fixedDeltaTime * speed);
+       
     }
 
-    public void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
 
-    public void OnJump(InputValue value)
-    {
-        stats.Health += 10;
-    }
 }
